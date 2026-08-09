@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitor Açkiləri Anbarı</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
     <link rel="manifest" href="manifest.json?v=2">
 </head>
 <body>
@@ -62,14 +62,15 @@
         </div>
     </div>
 
-    <!-- Yeni Açki Əlavə Etmə Modalı -->
+    <!-- Yeni Məlumat Əlavə Et Modalı -->
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-add">&times;</span>
             <h3>Yeni Açki Əlavə Et</h3>
             <form id="addForm">
                 <input type="text" id="inputModel" placeholder="Model (məs: Toyota Camry)" required>
-                <input type="text" id="inputSerial" placeholder="Sıra Nömrəsi (məs: A-102)" required>
+                <input type="text" id="inputSerial" placeholder="Sıra Nömrəsi (məs: 12)" required>
+                <input type="text" id="inputYear" placeholder="İli (məs: 2022)" required>
                 <input type="number" id="inputPrice" placeholder="Qiymət (AZN)" required>
                 <button type="submit" class="primary-btn">Yadda Saxla</button>
             </form>
@@ -77,6 +78,6 @@
     </div>
 
 
-<script type="module" src="app.js"></script>
+<script type="module" src="app.js?v=2"></script>
 </body>
 </html>

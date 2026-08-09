@@ -1,5 +1,5 @@
 import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { db } from "./firebase-config.js"; 
+import { db } from "./firebase-config.js";
 
 const framesList = document.getElementById("framesList");
 const searchInput = document.getElementById("searchInput");
@@ -12,7 +12,7 @@ async function loadFrames() {
     framesList.innerHTML = `
         <div class="loader-container">
             <div class="spinner"></div>
-            
+            <p>Məlumatlar yüklənir...</p>
         </div>
     `;
     
@@ -41,21 +41,25 @@ function displayFrames(frames) {
         const card = document.createElement("div");
         card.className = "card";
         
-        // Hamısını tək sətirdə və mərkəzdə düzürük
         card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                <h4 style="color: #3b82f6; font-size: 18px; margin: 0;">${frame.model}</h4>
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 15px; flex-wrap: wrap;">
+                <h4 style="color: #3b82f6; font-size: 18px; margin: 0; word-break: break-all; flex: 1; min-width: 150px;">${frame.model}</h4>
                 
-                <span style="background: #111625; border: 1px solid #2d3748; padding: 4px 12px; border-radius: 6px; font-size: 14px; color: #94a3b8;">
-                    Sıra: <strong style="color: #ffffff;">${frame.serial}</strong>
-                </span>
-                
-                <span style="color: #10b981; font-weight: bold; font-size: 16px;">${frame.price} AZN</span>
+                <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
+                    <span style="background: #111625; border: 1px solid #2d3748; padding: 4px 10px; border-radius: 6px; font-size: 13px; color: #94a3b8;">
+                        Sıra: <strong style="color: #ffffff;">${frame.serial}</strong>
+                    </span>
+                    
+                    <span style="background: #111625; border: 1px solid #2d3748; padding: 4px 10px; border-radius: 6px; font-size: 13px; color: #94a3b8;">
+                        İl: <strong style="color: #ffffff;">${frame.year || '-'}</strong>
+                    </span>
+                    
+                    <span style="color: #10b981; font-weight: bold; font-size: 16px; margin-left: 5px;">${frame.price} AZN</span>
+                </div>
             </div>
         `;
         
         card.addEventListener("click", () => openDetailModal(frame));
-        
         framesList.appendChild(card);
     });
 }
@@ -76,12 +80,14 @@ document.getElementById("addForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const model = document.getElementById("inputModel").value;
     const serial = document.getElementById("inputSerial").value;
+    const year = document.getElementById("inputYear") ? document.getElementById("inputYear").value : "";
     const price = document.getElementById("inputPrice").value;
 
     try {
         await addDoc(collection(db, "frames"), {
             model: model,
             serial: serial,
+            year: year,
             price: Number(price)
         });
         addModal.style.display = "none";
@@ -98,21 +104,22 @@ function openDetailModal(frame) {
     currentSelectedFrame = frame;
     document.getElementById("modalModelName").innerText = frame.model;
     document.getElementById("modalSerial").innerText = frame.serial;
+    if(document.getElementById("modalYear")) {
+        document.getElementById("modalYear").innerText = frame.year || '-';
+    }
     document.getElementById("modalPrice").innerText = frame.price;
     detailModal.style.display = "flex";
 }
 document.querySelector(".close").onclick = () => detailModal.style.display = "none";
 
-// Silmə Məntiqi
+// Silmə Məntiqi (Təsdiq pəncərəsi olmadan birbaşa silinir)
 document.getElementById("deleteBtn").onclick = async () => {
-    if (confirm("Bu açkini silmək istədiyinizdən əminsinizmi?")) {
-        try {
-            await deleteDoc(doc(db, "frames", currentSelectedFrame.id));
-            detailModal.style.display = "none";
-            loadFrames();
-        } catch (error) {
-            alert("Silinərkən xəta baş verdi: " + error.message);
-        }
+    try {
+        await deleteDoc(doc(db, "frames", currentSelectedFrame.id));
+        detailModal.style.display = "none";
+        loadFrames();
+    } catch (error) {
+        alert("Silinərkən xəta baş verdi: " + error.message);
     }
 };
 
@@ -122,6 +129,9 @@ document.getElementById("editBtn").onclick = () => {
     detailModal.style.display = "none";
     document.getElementById("editInputModel").value = currentSelectedFrame.model;
     document.getElementById("editInputSerial").value = currentSelectedFrame.serial;
+    if(document.getElementById("editInputYear")) {
+        document.getElementById("editInputYear").value = currentSelectedFrame.year || '';
+    }
     document.getElementById("editInputPrice").value = currentSelectedFrame.price;
     editModal.style.display = "flex";
 };
@@ -131,6 +141,7 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const newModel = document.getElementById("editInputModel").value;
     const newSerial = document.getElementById("editInputSerial").value;
+    const newYear = document.getElementById("editInputYear") ? document.getElementById("editInputYear").value : "";
     const newPrice = document.getElementById("editInputPrice").value;
 
     try {
@@ -138,6 +149,7 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
         await updateDoc(frameRef, {
             model: newModel,
             serial: newSerial,
+            year: newYear,
             price: Number(newPrice)
         });
         editModal.style.display = "none";
@@ -147,5 +159,4 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
     }
 });
 
-// Səhifə açıldıqda yüklə
 loadFrames();
