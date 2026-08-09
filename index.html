@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor Açkiləri Anbarı</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+    <header>
+        <h2>🚗 Monitor Açkiləri</h2>
+        <button id="addBtn" class="primary-btn">+ Yeni Açki Əlavə Et</button>
+    </header>
+
+    <main>
+        <!-- Axtarış hissəsi -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Maşına görə axtar...">
+        </div>
+
+        <!-- Açkilərin siyahısı (Ana səhifə) -->
+        <div id="framesList" class="grid-list">
+            <!-- JavaScript vasitəsilə Firebase-dən gələn məlumatlar bura dolacaq -->
+        </div>
+    </main>
+
+    <!-- Detal (Sıra nömrəsi, qiymət, sil və dəyiş) Modalı -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalModelName">Model Adı</h3>
+            <p><strong>Sıra Nömrəsi:</strong> <span id="modalSerial"></span></p>
+            <p><strong>Qiymət:</strong> <span id="modalPrice"></span> AZN</p>
+            
+            <div class="modal-actions">
+                <button id="editBtn" class="edit-btn">Dəyişdir</button>
+                <button id="deleteBtn" class="delete-btn">Sil</button>
+            </div>
+        </div>
+    </div>
+
+ <!-- Məlumatı Dəyişmək Modalı -->
+    <div id="editModal" class="modal">
+        <div class="modal-content edit-modal-border">
+            <span class="close-edit" style="text-align: left; display: block;">&times;</span>
+            <h3>Məlumatı Dəyiş</h3>
+            <form id="editForm">
+                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Model</label>
+                <input type="text" id="editInputModel" placeholder="Model" required>
+                
+                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Sıra Nömrəsi</label>
+                <input type="text" id="editInputSerial" placeholder="Sıra Nömrəsi" required>
+                
+                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Qiymət (AZN)</label>
+                <input type="number" id="editInputPrice" placeholder="Qiymət" required>
+                
+                <button type="submit" class="primary-btn" style="display: block; width: 100%; padding: 15px; margin-top: 10px;">Yenilə</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Yeni Açki Əlavə Etmə Modalı -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close-add">&times;</span>
+            <h3>Yeni Açki Əlavə Et</h3>
+            <form id="addForm">
+                <input type="text" id="inputModel" placeholder="Model (məs: Toyota Camry)" required>
+                <input type="text" id="inputSerial" placeholder="Sıra Nömrəsi (məs: A-102)" required>
+                <input type="number" id="inputPrice" placeholder="Qiymət (AZN)" required>
+                <button type="submit" class="primary-btn">Yadda Saxla</button>
+            </form>
+        </div>
+    </div>
+
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

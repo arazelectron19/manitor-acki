@@ -1,0 +1,267 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #111625; /* İstədiyiniz tünd göy rəng */
+    color: #f1f5f9;
+    padding: 15px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.primary-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.search-box {
+    margin-bottom: 15px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px;
+    background-color: #1a2238;
+    border: 1px solid #2d3748;
+    border-radius: 8px;
+    font-size: 16px;
+    color: white;
+}
+
+.search-box input::placeholder {
+    color: #a0aec0;
+}
+
+.grid-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card {
+    background: #1a2238; /* Kartların tünd fonu */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid #2d3748;
+}
+
+.card:active {
+    background: #25304f;
+}
+
+.card h4 {
+    font-size: 18px;
+    color: #3b82f6;
+}
+
+/* Modallar */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #1a2238;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    border: 1px solid #2d3748;
+}
+
+.close, .close-add {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #a0aec0;
+}
+
+#addForm input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #111625;
+    border: 1px solid #2d3748;
+    border-radius: 6px;
+    color: white;
+}
+
+/* Yüklənmə Animasiyası */
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    gap: 10px;
+    color: #a0aec0;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #1a2238;
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Kartların səhifəyə açılarkən hamar gəlməsi üçün animasiya */
+.card {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.edit-btn {
+    flex: 1;
+    background-color: #f59e0b;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.delete-btn {
+    flex: 1;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#editForm input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #111625;
+    border: 1px solid #2d3748;
+    border-radius: 6px;
+    color: white;
+}
+
+/* Detal Modalının Dizaynını Təkmilləşdirək */
+#detailModal .modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Mətnlərin və elementlərin arasını açır */
+    padding: 24px;
+}
+
+#detailModal h3 {
+    font-size: 22px;
+    color: #3b82f6; /* Model adını vurğulamaq üçün göy rəng */
+    margin-bottom: 4px;
+}
+
+#detailModal p {
+    font-size: 16px;
+    color: #cbd5e1; /* Mətnləri bir az yumşaq ağ rəng edirik */
+    background: #111625;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #2d3748;
+}
+
+#detailModal p span {
+    color: #ffffff;
+    font-weight: bold; /* Sıra nömrəsi və qiyməti daha tünd ağ rəngdə göstərir */
+}
+
+/* Düymələrin dizaynı */
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.edit-btn, .delete-btn {
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.edit-btn:active, .delete-btn:active {
+    transform: scale(0.97);
+}
+
+/* Qırmızı çərçivə üçün yeni stil */
+.edit-modal-border {
+    border: 2px solid #ef4444 !important; /* Qırmızı yuxarı/ətraf çərçivə */
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+}
+
+/* (X) düyməsini sola çəkmək və böyütmək */
+.close-edit {
+    font-size: 30px !important;
+    cursor: pointer;
+    color: #ef4444 !important;
+    margin-bottom: 10px;
+}
+
+/* Yenilə düyməsini böyütmək */
+.primary-btn {
+    font-size: 18px !important;
+    padding: 15px !important;
+}
+
+/* Inputları bir az daha böyük edək */
+#editForm input {
+    padding: 15px !important;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
