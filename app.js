@@ -42,19 +42,19 @@ function displayFrames(frames) {
         card.className = "card";
         
         card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 15px; flex-wrap: wrap;">
-                <h4 style="color: #3b82f6; font-size: 18px; margin: 0; word-break: break-all; flex: 1; min-width: 150px;">${frame.model}</h4>
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 10px; flex-wrap: wrap;">
+                <h4 style="color: #3b82f6; font-size: 18px; margin: 0; word-break: break-all; flex: 1; min-width: 120px;">${frame.model}</h4>
                 
-                <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
-                    <span style="background: #111625; border: 1px solid #2d3748; padding: 4px 10px; border-radius: 6px; font-size: 13px; color: #94a3b8;">
+                <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto;">
+                    <span style="background: #111625; border: 1px solid #2d3748; padding: 4px 8px; border-radius: 6px; font-size: 12px; color: #94a3b8;">
                         Sıra: <strong style="color: #ffffff;">${frame.serial}</strong>
                     </span>
                     
-                    <span style="background: #111625; border: 1px solid #2d3748; padding: 4px 10px; border-radius: 6px; font-size: 13px; color: #94a3b8;">
+                    <span style="background: #111625; border: 1px solid #2d3748; padding: 4px 8px; border-radius: 6px; font-size: 12px; color: #94a3b8;">
                         İl: <strong style="color: #ffffff;">${frame.year || '-'}</strong>
                     </span>
                     
-                    <span style="color: #10b981; font-weight: bold; font-size: 16px; margin-left: 5px;">${frame.price} AZN</span>
+                    <span style="color: #10b981; font-weight: bold; font-size: 15px; margin-left: 4px;">${frame.price} AZN</span>
                 </div>
             </div>
         `;
