@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitor Açkiləri Anbarı</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=5">
     <link rel="manifest" href="manifest.json?v=3">
 </head>
 <body>
@@ -49,47 +49,55 @@
     </div>
 
 <!-- Məlumatı Dəyişmək Modalı -->
-    <div id="editModal" class="modal">
-        <div class="modal-content edit-modal-border">
-            <span class="close-edit" style="text-align: left; display: block;">&times;</span>
-            <h3>Məlumatı Dəyiş</h3>
-            <form id="editForm">
-                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Marka</label>
-                <select id="editInputBrand" required style="width: 100%; padding: 15px; margin-bottom: 15px; background-color: #111625; border: 1px solid #2d3748; border-radius: 6px; color: white; outline: none; font-size: 16px;">
-                    <option value="">Marka seçin...</option>
-                </select>
+<div id="editModal" class="modal">
+    <div class="modal-content edit-modal-border" style="position: relative;">
+        <span class="close-edit" style="position: absolute; right: 20px; top: 15px; font-size: 24px; cursor: pointer; color: #a0aec0; width: 36px; height: 36px; border: 1px solid #2d3748; border-radius: 8px; background: #111625; display: flex; align-items: center; justify-content: center;">&times;</span>
+        <h3 style="margin-bottom: 15px;">Məlumatı Dəyiş</h3>
+        <form id="editForm">
+            <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Marka</label>
+            <div id="editSelectBrandBtn" style="background: #111625; color: #ffffff; border: 1px solid #2d3748; padding: 15px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 16px;">
+                <span id="selectedBrandEditText">Marka seçin...</span>
+                <span style="font-size: 12px; color: #a0aec0;">▼</span>
+            </div>
+            <input type="hidden" id="editInputBrand" required>
 
-                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Model</label>
-                <input type="text" id="editInputModelName" placeholder="Model (məs: Corolla)" required style="width: 100%; padding: 15px; margin-bottom: 15px; background-color: #111625; border: 1px solid #2d3748; border-radius: 6px; color: white; outline: none; font-size: 16px;">
-                
-                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Sıra Nömrəsi</label>
-                <input type="text" id="editInputSerial" placeholder="Sıra Nömrəsi" required>
+            <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Model</label>
+            <input type="text" id="editInputModelName" placeholder="Model (məs: Corolla)" required style="width: 100%; padding: 15px; margin-bottom: 15px; background-color: #111625; border: 1px solid #2d3748; border-radius: 6px; color: white; outline: none; font-size: 16px;">
+            
+            <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Sıra Nömrəsi</label>
+            <input type="text" id="editInputSerial" placeholder="Sıra Nömrəsi" required>
 
-                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">İli</label>
-                <input type="text" id="editInputYear" placeholder="İli (məs: 2022)" required>
-                
-                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Qiymət (AZN)</label>
-                <input type="number" id="editInputPrice" placeholder="Qiymət" required>
-                
-                <button type="submit" class="primary-btn" style="display: block; width: 100%; padding: 15px; margin-top: 10px;">Yenilə</button>
-            </form>
-        </div>
+            <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">İli</label>
+            <input type="text" id="editInputYear" placeholder="İli (məs: 2022)" required>
+            
+            <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Qiymət (AZN)</label>
+            <input type="number" id="editInputPrice" placeholder="Qiymət" required>
+            
+            <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                <button type="submit" class="primary-btn" style="padding: 15px 25px;">Yenilə</button>
+            </div>
+        </form>
     </div>
+</div>
 
-    <!-- Yeni Məlumat Əlavə Et Modalı -->
+   <!-- Yeni Məlumat Əlavə Et Modalı -->
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-add">&times;</span>
             <h3>Yeni Açki Əlavə Et</h3>
             <form id="addForm">
-                <select id="inputModel" required style="width: 100%; padding: 12px; margin-bottom: 10px; background-color: #111625; border: 1px solid #2d3748; border-radius: 6px; color: white; outline: none;">
-                    <option value="">Marka seçin...</option>
-                </select>
+               <div id="selectBrandBtn" style="background: #111625; color: #ffffff; border: 1px solid #2d3748; padding: 12px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 16px;">
+    <span id="selectedBrandAddText">Marka seçin...</span>
+    <span style="font-size: 12px; color: #a0aec0;">▼</span>
+</div>
+<input type="hidden" id="inputModel" required>
                 <input type="text" id="inputModelName" placeholder="Model (məs: Corolla)" required>
                 <input type="text" id="inputSerial" placeholder="Sıra Nömrəsi (məs: 12)" required>
                 <input type="text" id="inputYear" placeholder="İli (məs: 2022)" required>
                 <input type="number" id="inputPrice" placeholder="Qiymət (AZN)" required>
-                <button type="submit" class="primary-btn">Yadda Saxla</button>
+                <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                    <button type="submit" class="primary-btn">Yadda Saxla</button>
+                </div>
             </form>
         </div>
     </div>
@@ -145,6 +153,6 @@
 
 
     <div id="toastNotification"></div>
-<script type="module" src="app.js?v=4"></script>
+<script type="module" src="app.js?v=6"></script>
 </body>
 </html>

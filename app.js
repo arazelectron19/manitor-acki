@@ -151,19 +151,22 @@ document.getElementById("deleteBtn").onclick = async () => {
 
 // Dəyişdirmə (Redaktə) Məntiqi
 const editModal = document.getElementById("editModal");
+
+// Redaktə zamanı marka seçimi qutusuna klikləndikdə
+document.getElementById("editSelectBrandBtn").onclick = () => {
+    activeBrandTarget = "edit";
+    openCustomBrandModal();
+};
+
 document.getElementById("editBtn").onclick = () => {
     detailModal.style.display = "none";
     
-    // Markaları select elementinə yığırıq
-    const editInputBrand = document.getElementById("editInputBrand");
-    let inputHtml = '<option value="">Marka seçin...</option>';
-    allBrands.forEach(b => {
-        inputHtml += `<option value="${b.name}">${b.name}</option>`;
-    });
-    editInputBrand.innerHTML = inputHtml;
+    // Mövcud dəyərləri xanalara yazırıq
+    const currentBrand = currentSelectedFrame.brand || currentSelectedFrame.model || "";
+    document.getElementById("editInputBrand").value = currentBrand;
+    document.getElementById("selectedBrandEditText").innerText = currentBrand || "Marka seçin...";
+    document.getElementById("selectedBrandEditText").style.color = currentBrand ? "#ffffff" : "#a0aec0";
 
-    // Mövcud dəyərləri müvafiq xanalara doldururuq
-    editInputBrand.value = currentSelectedFrame.brand || currentSelectedFrame.model || "";
     document.getElementById("editInputModelName").value = currentSelectedFrame.modelName || "";
     document.getElementById("editInputSerial").value = currentSelectedFrame.serial || "";
     if(document.getElementById("editInputYear")) {
@@ -182,6 +185,11 @@ document.getElementById("editForm").addEventListener("submit", async (e) => {
     const newSerial = document.getElementById("editInputSerial").value;
     const newYear = document.getElementById("editInputYear") ? document.getElementById("editInputYear").value : "";
     const newPrice = document.getElementById("editInputPrice").value;
+
+    if (!newBrand) {
+        showNotification("Zəhmət olmasa marka seçin!", "error");
+        return;
+    }
 
     try {
         const frameRef = doc(db, "frames", currentSelectedFrame.id);
@@ -418,4 +426,61 @@ function openEditModal(frame) {
     document.getElementById("editInputPrice").value = frame.price || "";
     
     editModal.style.display = "flex";
+}
+
+// --- XÜSUSİ MARKA SEÇİMİ MODALI ÜÇÜN DƏYİŞƏN VƏ FUNKSİYALAR ---
+let activeBrandTarget = ""; // "add" və ya "edit" olduğunu müəyyən edir
+
+// Əgər HTML-də xüsusi marka seçim modalınız yoxdursa və ya birbaşa menyudan seçirsinizsə:
+function openCustomBrandModal() {
+    // Əgər filter üçün olan filterModal-ı və ya xüsusi bir marka seçim modalı işlədirsinizsə buranı tənzimləyirik.
+    // Ən sadə üsul olaraq mövcud filterModal-ı və ya marka siyahısını bu məqsədlə istifadə etməkdir:
+    renderCustomBrandSelection();
+}
+
+function renderCustomBrandSelection() {
+    const filterModal = document.getElementById("filterModal");
+    const filterBrandsContainer = document.getElementById("filterBrandsContainer");
+    const filterModalTitle = filterModal.querySelector("h3");
+    
+    if(filterModalTitle) filterModalTitle.innerText = "Marka Seçin";
+    filterBrandsContainer.innerHTML = "";
+    
+    if (allBrands.length === 0) {
+        filterBrandsContainer.innerHTML = "<p style='text-align: center; color: #a0aec0; padding: 10px;'>Əvvəlcə marka əlavə edin.</p>";
+        filterModal.style.display = "flex";
+        return;
+    }
+
+    allBrands.forEach(brand => {
+        const item = document.createElement("div");
+        item.style.cssText = "background: #111625; padding: 12px 14px; border-radius: 8px; border: 1px solid #2d3748; cursor: pointer; color: #ffffff;";
+        item.innerText = brand.name;
+        
+        item.onclick = () => {
+            if (activeBrandTarget === "add") {
+                document.getElementById("inputModel").value = brand.name;
+                document.getElementById("selectedBrandAddText").innerText = brand.name;
+                document.getElementById("selectedBrandAddText").style.color = "#ffffff";
+            } else if (activeBrandTarget === "edit") {
+                document.getElementById("editInputBrand").value = brand.name;
+                document.getElementById("selectedBrandEditText").innerText = brand.name;
+                document.getElementById("selectedBrandEditText").style.color = "#ffffff";
+            }
+            filterModal.style.display = "none";
+        };
+        
+        filterBrandsContainer.appendChild(item);
+    });
+    
+    filterModal.style.display = "flex";
+}
+
+// Yeni açki əlavə etmə modalındakı marka seçimi düyməsi üçün dinləyici:
+const selectBrandBtn = document.getElementById("selectBrandBtn");
+if (selectBrandBtn) {
+    selectBrandBtn.onclick = () => {
+        activeBrandTarget = "add";
+        openCustomBrandModal();
+    };
 }
