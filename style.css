@@ -241,8 +241,8 @@ h2 {
 
 /* Qırmızı çərçivə üçün yeni stil */
 .edit-modal-border {
-    border: 2px solid #ef4444 !important; /* Qırmızı yuxarı/ətraf çərçivə */
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+    border: 2px solid #3b82f6 !important; /* Mavi ətraf çərçivə */
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
 }
 
 /* (X) düyməsini sola çəkmək və böyütmək */
@@ -267,4 +267,39 @@ h2 {
     overflow-wrap: break-word;
     max-width: 100%;
     line-height: 1.4;
+}
+
+/* Bildiriş (Toast Notification) dizaynı */
+#toastNotification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #1e293b;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 9999;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    border-left: 4px solid #3b82f6;
+}
+
+#toastNotification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#toastNotification.success {
+    border-left-color: #10b981;
+}
+
+#toastNotification.error {
+    border-left-color: #ef4444;
 }
