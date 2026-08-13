@@ -269,11 +269,11 @@ h2 {
     line-height: 1.4;
 }
 
-/* Bildiriş (Toast Notification) dizaynı */
 #toastNotification {
     position: fixed;
-    bottom: 20px;
+    top: 20px;
     right: 20px;
+    bottom: auto;
     background: #1e293b;
     color: #fff;
     padding: 12px 20px;
@@ -284,8 +284,9 @@ h2 {
     gap: 10px;
     z-index: 9999;
     font-size: 14px;
+    font-weight: bold; /* Yazıları qalın edir */
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(-20px);
     transition: all 0.3s ease;
     pointer-events: none;
     border-left: 4px solid #3b82f6;
@@ -297,9 +298,13 @@ h2 {
 }
 
 #toastNotification.success {
-    border-left-color: #10b981;
+    background-color: #10b981;
+    border-left-color: #064e3b;
+    color: #d1fae5;
 }
 
 #toastNotification.error {
-    border-left-color: #ef4444;
+    background-color: #ef4444;
+    border-left-color: #7f1d1d;
+    color: #fee2e2;
 }

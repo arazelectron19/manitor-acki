@@ -1,5 +1,5 @@
 import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-import { db } from "./firebase-config.js";
+import { db } from "./firebase.js";
 
 const framesList = document.getElementById("framesList");
 const searchInput = document.getElementById("searchInput");
@@ -47,7 +47,7 @@ async function loadFrames() {
 function displayFrames(frames) {
     framesList.innerHTML = "";
     if (frames.length === 0) {
-        framesList.innerHTML = "<p style='text-align: center; color: #ef4444;'>Heç bir açki tapılmadı.</p>";
+        framesList.innerHTML = "<p style='text-align: center; color: #ef4444;'>Açki tapılmadı.</p>";
         return;
     }
 
@@ -225,10 +225,22 @@ const brandModal = document.getElementById("brandModal");
 async function loadBrands() {
     try {
         const querySnapshot = await getDocs(collection(db, "brands"));
-        allBrands = [];
+        const rawBrands = [];
         querySnapshot.forEach((docSnap) => {
-            allBrands.push({ id: docSnap.id, ...docSnap.data() });
+            rawBrands.push({ id: docSnap.id, ...docSnap.data() });
         });
+        
+        // Eyni adı olan təkrar markaların siyahıda birdən çox görünməsinin qarşısını alırıq
+        const uniqueMap = new Map();
+        rawBrands.forEach(b => {
+            const formattedName = b.name.trim();
+            const lowerName = formattedName.toLowerCase();
+            if (!uniqueMap.has(lowerName)) {
+                uniqueMap.set(lowerName, { id: b.id, name: formattedName });
+            }
+        });
+        
+        allBrands = Array.from(uniqueMap.values());
         allBrands.sort((a, b) => a.name.localeCompare(b.name));
     } catch (error) {
         console.error("Markalar yüklənərkən xəta:", error);
@@ -241,11 +253,18 @@ if(document.querySelector(".close-brand")) {
 
 document.getElementById("brandForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const brandName = document.getElementById("inputNewBrand").value.trim();
-    if (!brandName) return;
+    const brandInputVal = document.getElementById("inputNewBrand").value.trim();
+    if (!brandInputVal) return;
+
+    // Eyni markanın əvvəlcədən mövcud olub- olmadığını yoxlayırıq (böyük/kiçik hərf fərqi qoymadan)
+    const brandExists = allBrands.some(b => b.name.toLowerCase() === brandInputVal.toLowerCase());
+    if (brandExists) {
+        showNotification("Bu marka artıq mövcuddur!", "error");
+        return;
+    }
 
     try {
-        await addDoc(collection(db, "brands"), { name: brandName });
+        await addDoc(collection(db, "brands"), { name: brandInputVal });
         brandModal.style.display = "none";
         document.getElementById("brandForm").reset();
         await loadBrands();
@@ -299,7 +318,6 @@ openBrandsListBtn.onclick = async () => {
     if (manageBrandSearchInput) manageBrandSearchInput.value = "";
     renderManageBrandsList(allBrands);
     brandsListModal.style.display = "flex";
-    // Klavituranın açılmaması üçün focus() silindi
 };
 
 closeBrandsListBtn.onclick = () => brandsListModal.style.display = "none";
@@ -333,7 +351,7 @@ function renderManageBrandsList(brandsToDisplay) {
                 const currentTerm = manageBrandSearchInput ? manageBrandSearchInput.value.toLowerCase().trim() : "";
                 const filtered = allBrands.filter(b => b.name.toLowerCase().includes(currentTerm));
                 renderManageBrandsList(filtered);
-                showNotification("Marka uğurla silindi!", "success");
+                showNotification("Marka silindi!", "success");
             } catch (error) {
                 showNotification("Marka silinərkən xəta: " + error.message, "error");
             }
@@ -362,7 +380,6 @@ brandFilterBtn.onclick = async () => {
     if (brandSearchInput) brandSearchInput.value = ""; 
     renderFilterBrandsList(allBrands);
     filterModal.style.display = "flex";
-    // Klavituranın açılmaması üçün focus() silindi
 };
 
 document.querySelector(".close-filter-modal").onclick = () => {
@@ -374,7 +391,6 @@ async function openCustomBrandModal() {
     if (brandSearchInput) brandSearchInput.value = "";
     renderFilterBrandsList(allBrands);
     filterModal.style.display = "flex";
-    // Klavituranın açılmaması üçün focus() silindi
 }
 
 function renderFilterBrandsList(brandsToDisplay) {
