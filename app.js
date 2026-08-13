@@ -7,7 +7,7 @@ const searchInput = document.getElementById("searchInput");
 let allFrames = [];
 let currentSelectedFrame = null;
 let allBrands = [];
-let activeBrandTarget = ""; // "add" və ya "edit" olduğunu müəyyən edir
+let activeBrandTarget = ""; 
 let selectedBrandValue = "";
 
 // --- BİLDİRİŞ (TOAST) FUNKSİYASI ---
@@ -235,7 +235,6 @@ async function loadBrands() {
     }
 }
 
-// Marka modalını bağlamaq
 if(document.querySelector(".close-brand")) {
     document.querySelector(".close-brand").onclick = () => brandModal.style.display = "none";
 }
@@ -279,7 +278,6 @@ document.getElementById("selectFrameOption").onclick = () => {
     addModal.style.display = "flex";
 };
 
-// Yeni açki əlavə etmək modalındakı marka seçimi düyməsi
 const selectBrandBtn = document.getElementById("selectBrandBtn");
 if (selectBrandBtn) {
     selectBrandBtn.onclick = () => {
@@ -288,7 +286,7 @@ if (selectBrandBtn) {
     };
 }
 
-// --- MARKALARIN SİYAHISI MODALI (Axtarış ilə) ---
+// --- MARKALARIN SİYAHISI MODALI ---
 const brandsListModal = document.getElementById("brandsListModal");
 const openBrandsListBtn = document.getElementById("openBrandsListBtn");
 const closeBrandsListBtn = document.querySelector(".close-brands-list");
@@ -301,7 +299,7 @@ openBrandsListBtn.onclick = async () => {
     if (manageBrandSearchInput) manageBrandSearchInput.value = "";
     renderManageBrandsList(allBrands);
     brandsListModal.style.display = "flex";
-    if (manageBrandSearchInput) manageBrandSearchInput.focus();
+    // Klavituranın açılmaması üçün focus() silindi
 };
 
 closeBrandsListBtn.onclick = () => brandsListModal.style.display = "none";
@@ -351,7 +349,7 @@ if (manageBrandSearchInput) {
     });
 }
 
-// --- XÜSUSİ FİLTR VƏ SEÇİM MODALI (Axtarış ilə) ---
+// --- XÜSUSİ FİLTR VƏ SEÇİM MODALI ---
 const filterModal = document.getElementById("filterModal");
 const brandFilterBtn = document.getElementById("brandFilterBtn");
 const selectedBrandText = document.getElementById("selectedBrandText");
@@ -360,11 +358,11 @@ const brandSearchInput = document.getElementById("brandSearchInput");
 
 brandFilterBtn.onclick = async () => {
     await loadBrands();
-    activeBrandTarget = ""; // Ana səhifə filtridir
+    activeBrandTarget = ""; 
     if (brandSearchInput) brandSearchInput.value = ""; 
     renderFilterBrandsList(allBrands);
     filterModal.style.display = "flex";
-    if (brandSearchInput) brandSearchInput.focus();
+    // Klavituranın açılmaması üçün focus() silindi
 };
 
 document.querySelector(".close-filter-modal").onclick = () => {
@@ -376,13 +374,12 @@ async function openCustomBrandModal() {
     if (brandSearchInput) brandSearchInput.value = "";
     renderFilterBrandsList(allBrands);
     filterModal.style.display = "flex";
-    if (brandSearchInput) brandSearchInput.focus();
+    // Klavituranın açılmaması üçün focus() silindi
 }
 
 function renderFilterBrandsList(brandsToDisplay) {
     filterBrandsContainer.innerHTML = "";
     
-    // Əgər əsas səhifə filtridirsə "Bütün Markalar" seçimi əlavə edirik
     if (activeBrandTarget !== "add" && activeBrandTarget !== "edit") {
         const allOption = document.createElement("div");
         allOption.style.cssText = "background: #111625; padding: 12px 14px; border-radius: 8px; border: 1px solid #2d3748; cursor: pointer; color: #ffffff; font-weight: bold;";
@@ -435,13 +432,11 @@ if (brandSearchInput) {
     });
 }
 
-// Bütün modalları çölə kliklədikdə bağlamaq
 window.addEventListener("click", (e) => {
     if (e.target.classList.contains("modal")) {
         e.target.style.display = "none";
     }
 });
 
-// Səhifəyə ilk girişdə markaları və məlumatları yükləyirik
 loadBrands();
 loadFrames();
