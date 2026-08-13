@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitor Açkiləri Anbarı</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="style.css?v=6">
     <link rel="manifest" href="manifest.json?v=3">
 </head>
 <body>
@@ -19,12 +19,12 @@
     </header>
     <main>
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-    <input type="text" id="searchInput" placeholder="Maşına görə axtar..." style="flex: 1; background-color: #1a2238; color: #ffffff; border: 1px solid #2d3748; padding: 12px; border-radius: 10px; outline: none;">
-    <div id="brandFilterBtn" style="background: #111625; color: #ffffff; border: 1px solid #2d3748; padding: 12px 15px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; min-width: 140px; font-size: 14px;">
-        <span id="selectedBrandText">Bütün Markalar</span>
-        <span style="font-size: 10px; color: #a0aec0;">▼</span>
-    </div>
-</div>
+            <input type="text" id="searchInput" placeholder="Maşına görə axtar..." style="flex: 1; background-color: #1a2238; color: #ffffff; border: 1px solid #2d3748; padding: 12px; border-radius: 10px; outline: none;">
+            <div id="brandFilterBtn" style="background: #111625; color: #ffffff; border: 1px solid #2d3748; padding: 12px 15px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; min-width: 140px; font-size: 14px;">
+                <span id="selectedBrandText">Bütün Markalar</span>
+                <span style="font-size: 10px; color: #a0aec0;">▼</span>
+            </div>
+        </div>
 
         <!-- Açkilərin siyahısı (Ana səhifə) -->
         <div id="framesList" class="grid-list">
@@ -32,7 +32,7 @@
         </div>
     </main>
 
-    <!-- Detal (Sıra nömrəsi, qiymət, sil və dəyiş) Modalı -->
+    <!-- Detal Modalı -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -48,49 +48,49 @@
         </div>
     </div>
 
-<!-- Məlumatı Dəyişmək Modalı -->
-<div id="editModal" class="modal">
-    <div class="modal-content edit-modal-border" style="position: relative;">
-        <span class="close-edit" style="position: absolute; right: 20px; top: 15px; font-size: 24px; cursor: pointer; color: #a0aec0; width: 36px; height: 36px; border: 1px solid #2d3748; border-radius: 8px; background: #111625; display: flex; align-items: center; justify-content: center;">&times;</span>
-        <h3 style="margin-bottom: 15px;">Məlumatı Dəyiş</h3>
-        <form id="editForm">
-            <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Marka</label>
-            <div id="editSelectBrandBtn" style="background: #111625; color: #ffffff; border: 1px solid #2d3748; padding: 15px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 16px;">
-                <span id="selectedBrandEditText">Marka seçin...</span>
-                <span style="font-size: 12px; color: #a0aec0;">▼</span>
-            </div>
-            <input type="hidden" id="editInputBrand" required>
+    <!-- Məlumatı Dəyişmək Modalı -->
+    <div id="editModal" class="modal">
+        <div class="modal-content edit-modal-border" style="position: relative;">
+            <span class="close-edit" style="position: absolute; right: 20px; top: 15px; font-size: 24px; cursor: pointer; color: #a0aec0; width: 36px; height: 36px; border: 1px solid #2d3748; border-radius: 8px; background: #111625; display: flex; align-items: center; justify-content: center;">&times;</span>
+            <h3 style="margin-bottom: 15px;">Məlumatı Dəyiş</h3>
+            <form id="editForm">
+                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Marka</label>
+                <div id="editSelectBrandBtn" style="background: #111625; color: #ffffff; border: 1px solid #2d3748; padding: 15px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 16px;">
+                    <span id="selectedBrandEditText">Marka seçin...</span>
+                    <span style="font-size: 12px; color: #a0aec0;">▼</span>
+                </div>
+                <input type="hidden" id="editInputBrand" required>
 
-            <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Model</label>
-            <input type="text" id="editInputModelName" placeholder="Model (məs: Corolla)" required style="width: 100%; padding: 15px; margin-bottom: 15px; background-color: #111625; border: 1px solid #2d3748; border-radius: 6px; color: white; outline: none; font-size: 16px;">
-            
-            <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Sıra Nömrəsi</label>
-            <input type="text" id="editInputSerial" placeholder="Sıra Nömrəsi" required>
+                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Model</label>
+                <input type="text" id="editInputModelName" placeholder="Model (məs: Corolla)" required style="width: 100%; padding: 15px; margin-bottom: 15px; background-color: #111625; border: 1px solid #2d3748; border-radius: 6px; color: white; outline: none; font-size: 16px;">
+                
+                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Sıra Nömrəsi</label>
+                <input type="text" id="editInputSerial" placeholder="Sıra Nömrəsi" required>
 
-            <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">İli</label>
-            <input type="text" id="editInputYear" placeholder="İli (məs: 2022)" required>
-            
-            <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Qiymət (AZN)</label>
-            <input type="number" id="editInputPrice" placeholder="Qiymət" required>
-            
-            <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-                <button type="submit" class="primary-btn" style="padding: 15px 25px;">Yenilə</button>
-            </div>
-        </form>
+                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">İli</label>
+                <input type="text" id="editInputYear" placeholder="İli (məs: 2022)" required>
+                
+                <label style="font-size: 14px; color: #a0aec0; display: block; margin-bottom: 5px;">Qiymət (AZN)</label>
+                <input type="number" id="editInputPrice" placeholder="Qiymət" required>
+                
+                <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                    <button type="submit" class="primary-btn" style="padding: 15px 25px;">Yenilə</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-   <!-- Yeni Məlumat Əlavə Et Modalı -->
+    <!-- Yeni Məlumat Əlavə Et Modalı -->
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-add">&times;</span>
             <h3>Yeni Açki Əlavə Et</h3>
             <form id="addForm">
                <div id="selectBrandBtn" style="background: #111625; color: #ffffff; border: 1px solid #2d3748; padding: 12px; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 16px;">
-    <span id="selectedBrandAddText">Marka seçin...</span>
-    <span style="font-size: 12px; color: #a0aec0;">▼</span>
-</div>
-<input type="hidden" id="inputModel" required>
+                    <span id="selectedBrandAddText">Marka seçin...</span>
+                    <span style="font-size: 12px; color: #a0aec0;">▼</span>
+                </div>
+                <input type="hidden" id="inputModel" required>
                 <input type="text" id="inputModelName" placeholder="Model (məs: Corolla)" required>
                 <input type="text" id="inputSerial" placeholder="Sıra Nömrəsi (məs: 12)" required>
                 <input type="text" id="inputYear" placeholder="İli (məs: 2022)" required>
@@ -126,13 +126,16 @@
         </div>
     </div>
 
-    <!-- Mövcud Markaların Siyahısı Modalı -->
+    <!-- Mövcud Markaların Siyahısı Modalı (Axtarış inputu əlavə olundu) -->
     <div id="brandsListModal" class="modal">
-        <div class="modal-content" style="border: 2px solid #8b5cf6; max-width: 450px;">
+        <div class="modal-content" style="border: 2px solid #8b5cf6; max-width: 450px; position: relative;">
             <span class="close-brands-list" style="position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: #a0aec0;">&times;</span>
             <h3 style="margin-bottom: 15px; color: #ffffff;">Qeydiyyatdakı Markalar</h3>
             
-            <div id="brandsListContainer" style="max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;">
+            <!-- Axtarış inputu -->
+            <input type="text" id="manageBrandSearchInput" placeholder="Marka axtar..." style="width: 100%; padding: 10px 12px; margin-bottom: 12px; background-color: #111625; border: 1px solid #2d3748; border-radius: 6px; color: white; outline: none; font-size: 14px;">
+
+            <div id="brandsListContainer" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;">
                 <!-- Markalar bura dinamik olaraq doldurulacaq -->
             </div>
             
@@ -140,19 +143,22 @@
         </div>
     </div>
 
-    <!-- Marka Seçimi Modalı (Filtr üçün) -->
+    <!-- Marka Seçimi Modalı (Filtr və ya Seçim üçün) -->
     <div id="filterModal" class="modal">
-        <div class="modal-content" style="border: 2px solid #3b82f6; max-width: 350px;">
+        <div class="modal-content" style="border: 2px solid #3b82f6; max-width: 350px; position: relative;">
             <span class="close-filter-modal" style="position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: #a0aec0;">&times;</span>
             <h3 style="margin-bottom: 15px; color: #ffffff;">Marka Seçin</h3>
+            
+            <!-- Axtarış inputu -->
+            <input type="text" id="brandSearchInput" placeholder="Marka axtar..." style="width: 100%; padding: 10px 12px; margin-bottom: 12px; background-color: #111625; border: 1px solid #2d3748; border-radius: 6px; color: white; outline: none; font-size: 14px;">
+
             <div id="filterBrandsContainer" style="max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;">
                 <!-- Markalar bura dolacaq -->
             </div>
         </div>
     </div>
 
-
     <div id="toastNotification"></div>
-<script type="module" src="app.js?v=6"></script>
+    <script type="module" src="app.js?v=7"></script>
 </body>
 </html>
